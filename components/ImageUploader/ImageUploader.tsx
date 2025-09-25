@@ -24,14 +24,18 @@ const DragAndDropImage = ({ image="", setImage, removeImage, setFileSizeOverLimi
   };
 
   const handleImageClick = () => {
-    inputRef.current.click();
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
   };
   
-  const handleImageDrop = (files) => {
+  const handleImageDrop = (files: FileList) => {
     if (files.length > 0) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setImage(event.target.result);
+        if (event.target) {
+          setImage((event.target as FileReader).result);
+        }
       };
       reader.readAsDataURL(files[0]);
     }
@@ -49,7 +53,7 @@ const DragAndDropImage = ({ image="", setImage, removeImage, setFileSizeOverLimi
     handleImageDrop(files);
   };
 
-  const inputRef = createRef();
+  const inputRef = createRef<HTMLInputElement>();
 
   return (
     <div
