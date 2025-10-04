@@ -1,4 +1,8 @@
-const Overlay = ({ children }) => {
+interface ChildrenProps {
+  children: React.ReactNode
+}
+
+const Overlay = ({ children }: ChildrenProps) => {
   return (
     <div 
       className="hidden overlay absolute inset-0
