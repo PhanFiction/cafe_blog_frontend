@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Nav() {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [lastScrollY, setLastScrollY] = useState<number>(0);
 
   // Adds scroll effect to remove nav when user scrolls down and unhides nav when scrolling up
   useEffect(() => {
