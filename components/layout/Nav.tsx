@@ -3,6 +3,14 @@ import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 
+const navItems = [
+  { name: "Gears", img: "/gear-sm-color.svg", href: "/" },
+  { name: "Beans", img: "/beans-sm-color.svg", href: "/" },
+  { name: "Roasting", img: "/roasting-sm-color.svg", href: "/" },
+  { name: "Brewing", img: "/brewing-sm-color.svg", href: "/" },
+  { name: "Receipes", img: "/recipes-sm-color.svg", href: "/" },
+]
+
 export default function Nav() {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
@@ -32,13 +40,13 @@ export default function Nav() {
   }, [lastScrollY]);
   
   return (
-    <nav className={`fixed w-full bg-[#222121] p-4 border-b border-[#3F3E3E] z-20
+    <nav className={`fixed w-full bg-[#e9e6e6] p-4 border-b border-[#3F3E3E] z-20 text-black
       transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`
       }>
       <div className="flex items-center justify-between md:mx-12">
         <Link href="/">
           <Image
-            src="/logo.png"
+            src="/coffee-favicon.png"
             alt="logo"
             width="90"
             height="100"
@@ -46,15 +54,31 @@ export default function Nav() {
           />
         </Link>
         <ul className="flex gap-3 md:gap-4">
-          <Link href="/" className="font-rubik text-md hover:font-rubikGlitch hover:bg-gradient-to-r hover:from-green-500 hover:via-teal-500 hover:to-green-900 bg-clip-text hover:text-transparent font-semibold hover:font-normal duration-300">
-            <li className="">Home</li>
-          </Link>
-          <Link href="/" className="font-rubik text-md hover:font-rubikGlitch hover:bg-gradient-to-r hover:from-green-500 hover:via-teal-500 hover:to-green-900 bg-clip-text hover:text-transparent font-semibold hover:font-normal duration-300">
-            <li className="">Gears</li>
-          </Link>
-          <Link href="/contact" className="font-rubik text-md hover:font-rubikGlitch hover:bg-gradient-to-r hover:from-green-500 hover:via-teal-500 hover:to-green-900 bg-clip-text hover:text-transparent font-semibold hover:font-normal duration-300">
-            <li className="">Contact</li>
-          </Link>
+          {navItems.map((item) => (
+            <Link key={item.name} href={item.href} className="font-rubik text-md group bg-clip-text font-semibold duration-300 flex items-center">
+              <li>
+                <Image
+                  src={item.img}
+                  alt="logo"
+                  width="90"
+                  height="100"
+                  className="w-6 md:h-auto max-w-full group-hover:opacity-50 transition-opacity duration-300 mr-2"
+                />
+              </li>
+              <div>
+                <li className="items-center justify-center hidden md:flex relative">
+                  <Image
+                    src="/menu-hover.svg"
+                    alt="logo"
+                    width="90"
+                    height="100"
+                    className="opacity-0 w-3 md:h-auto max-w-full group-hover:opacity-100 transition-opacity duration-300 absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4"
+                  />
+                </li>
+                <li className="">{item.name}</li>
+              </div>
+            </Link>
+          ))}
         </ul>
       </div>
     </nav>
