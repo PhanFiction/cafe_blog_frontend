@@ -14,6 +14,7 @@ const navItems = [
 export default function Nav() {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Adds scroll effect to remove nav when user scrolls down and unhides nav when scrolling up
   useEffect(() => {
@@ -40,47 +41,100 @@ export default function Nav() {
   }, [lastScrollY]);
   
   return (
-    <nav className={`fixed w-full bg-[#e9e6e6] p-4 border-b border-[#3F3E3E] z-20 text-black
-      transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`
-      }>
-      <div className="flex items-center justify-between md:mx-12">
-        <Link href="/">
+    <nav
+      className={`fixed w-full bg-[#e9e6e6] p-4 border-b border-[#3F3E3E] z-20 text-black transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      <div className="flex items-center justify-between mx-4 md:mx-12">
+        {/* Logo */}
+        <Link href="/" className="flex items-center">
           <Image
             src="/coffee-favicon.png"
             alt="logo"
-            width="90"
-            height="100"
-            className="2xl:w-auto md:h-auto max-w-full"
+            width={60}
+            height={60}
+            className="w-12 h-12 object-contain"
           />
         </Link>
-        <ul className="flex gap-3 md:gap-4">
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex gap-6">
           {navItems.map((item) => (
-            <Link key={item.name} href={item.href} className="font-rubik text-md group bg-clip-text font-semibold duration-300 flex items-center">
-              <li>
+            <Link
+              key={item.name}
+              href={item.href}
+              className="font-rubik text-md group font-semibold duration-300 flex items-center hover:text-gray-700"
+            >
+              <li className="flex items-center">
                 <Image
                   src={item.img}
-                  alt="logo"
-                  width="90"
-                  height="100"
-                  className="w-6 md:h-auto max-w-full group-hover:opacity-50 transition-opacity duration-300 mr-2"
+                  alt={item.name}
+                  width={24}
+                  height={24}
+                  className="w-5 h-5 group-hover:opacity-50 transition-opacity duration-300 mr-2"
+                />
+                <span>{item.name}</span>
+              </li>
+              <li className="relative hidden md:flex items-center justify-center">
+                <Image
+                  src="/menu-hover.svg"
+                  alt="hover"
+                  width={12}
+                  height={12}
+                  className="opacity-0 w-3 h-3 group-hover:opacity-100 transition-opacity duration-300 absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4"
                 />
               </li>
-              <div>
-                <li className="items-center justify-center hidden md:flex relative">
-                  <Image
-                    src="/menu-hover.svg"
-                    alt="logo"
-                    width="90"
-                    height="100"
-                    className="opacity-0 w-3 md:h-auto max-w-full group-hover:opacity-100 transition-opacity duration-300 absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4"
-                  />
-                </li>
-                <li className="">{item.name}</li>
-              </div>
             </Link>
           ))}
         </ul>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden flex flex-col gap-1 focus:outline-none"
+          aria-label="Toggle menu"
+        >
+          <span
+            className={`block w-6 h-[2px] bg-black transition-transform ${
+              menuOpen ? "rotate-45 translate-y-[5px]" : ""
+            }`}
+          />
+          <span
+            className={`block w-6 h-[2px] bg-black transition-opacity ${
+              menuOpen ? "opacity-0" : ""
+            }`}
+          />
+          <span
+            className={`block w-6 h-[2px] bg-black transition-transform ${
+              menuOpen ? "-rotate-45 -translate-y-[5px]" : ""
+            }`}
+          />
+        </button>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {menuOpen && (
+        <ul className="flex flex-col items-center mt-4 md:hidden gap-4 bg-[#e9e6e6] py-4 rounded-lg shadow-md">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="font-rubik text-lg font-semibold hover:text-gray-700 flex items-center gap-2"
+              onClick={() => setMenuOpen(false)}
+            >
+              <Image
+                src={item.img}
+                alt={item.name}
+                width={20}
+                height={20}
+                className="w-5 h-5"
+              />
+              <span>{item.name}</span>
+            </Link>
+          ))}
+        </ul>
+      )}
     </nav>
-  )
+  );
 }
