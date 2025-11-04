@@ -4,11 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const navItems = [
-  { name: "Gears", img: "/gear-sm-color.svg", href: "/" },
-  { name: "Beans", img: "/beans-sm-color.svg", href: "/" },
-  { name: "Roasting", img: "/roasting-sm-color.svg", href: "/" },
-  { name: "Brewing", img: "/brewing-sm-color.svg", href: "/" },
-  { name: "Receipes", img: "/recipes-sm-color.svg", href: "/" },
+  { name: "Gear", img: "/gear-sm-color.svg", href: "/gear" },
+  { name: "Blog", img: "/beans-sm-color.svg", href: "/blog" },
+/*   { name: "Roasting", img: "/roasting-sm-color.svg", href: "/" },
+  { name: "Brewing", img: "/brewing-sm-color.svg", href: "/" }, */
+  { name: "Receipes", img: "/recipes-sm-color.svg", href: "/recipes" },
 ]
 
 export default function Nav() {
