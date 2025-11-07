@@ -42,7 +42,7 @@ export default function Nav() {
   
   return (
     <nav
-      className={`fixed w-full bg-[#e9e6e6] p-4 border-b border-[#3F3E3E] z-20 text-black transition-transform duration-300 ${
+      className={`fixed w-full bg-[#e9e6e6] p-2 border-b border-[#3F3E3E] z-20 text-black transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
