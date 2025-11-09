@@ -7,10 +7,10 @@ interface ShowCaseCardProps {
   item: {
     id: number;
     title: string;
-    description: string;
+    description?: string;
     img: string;
-    imgAlt: string | "";
-    link: string | "";
+    imgAlt?: string | "";
+    link?: string | "";
   };
   index: number;
 }
@@ -53,7 +53,7 @@ function ShowCaseCard({ item, index }: ShowCaseCardProps) {
       <div className="relative h-64 w-full overflow-hidden">
         <Image
           src={item.img}
-          alt={item.name}
+          alt={item.imgAlt}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
