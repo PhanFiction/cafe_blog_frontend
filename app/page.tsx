@@ -1,23 +1,25 @@
+import ShowCaseCard from '@/components/Card';
 import Image from 'next/image';
 
+const posts = [
+  {
+    id: 1,
+    title: "The Secret to a Perfect Espresso Shot",
+    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 2,
+    title: "5 Brewing Methods Every Coffee Lover Should Try",
+    img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 3,
+    title: "Latte Art Basics: Tips from Baristas",
+    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
+  },
+];
+
 export default function Home() {
-    const posts = [
-    {
-      id: 1,
-      title: "The Secret to a Perfect Espresso Shot",
-      img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-      id: 2,
-      title: "5 Brewing Methods Every Coffee Lover Should Try",
-      img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-      id: 3,
-      title: "Latte Art Basics: Tips from Baristas",
-      img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-    },
-  ];
   return (
     <main className="font-sans">
       {/* ===== Hero Section ===== */}
@@ -58,27 +60,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {posts.map((post) => (
-            <div
-              key={post.id}
-              className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg"
-            >
-              {/* Image */}
-              <div className="relative w-full h-64">
-                <Image
-                  src={post.img}
-                  alt={post.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                <h3 className="text-white text-xl font-semibold text-center px-4">
-                  {post.title}
-                </h3>
-              </div>
-            </div>
+            <ShowCaseCard key={post.id} item={post} />
           ))}
         </div>
       </section>
