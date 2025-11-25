@@ -2,37 +2,38 @@
 
 import { motion } from "framer-motion";
 
+const recipe = {
+  title: "Classic Espresso",
+  image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
+  ingredients: [
+    "18g freshly ground coffee (medium-fine)",
+    "36g filtered water",
+    "Milk for steaming (optional)",
+    "Syrup or sugar to taste (optional)",
+  ],
+  steps: [
+    "Purge the group head and lock in your portafilter with fresh grounds.",
+    "Start extraction and aim for a 25–30 second shot.",
+    "If making a latte or cappuccino, steam milk until velvety.",
+    "Pour milk over the espresso and serve immediately.",
+  ],
+  comments: [
+    {
+      id: 1,
+      user: "CoffeeFan23",
+      text: "This came out so smooth — perfect shot timing!",
+      time: "2 hours ago",
+    },
+    {
+      id: 2,
+      user: "BaristaGirl",
+      text: "Great base recipe. I added caramel syrup and it was amazing.",
+      time: "Yesterday",
+    },
+  ],
+}
+
 export default function CoffeeRecipePage() {
-  const recipe = {
-    title: "Classic Espresso",
-    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
-    ingredients: [
-      "18g freshly ground coffee (medium-fine)",
-      "36g filtered water",
-      "Milk for steaming (optional)",
-      "Syrup or sugar to taste (optional)",
-    ],
-    steps: [
-      "Purge the group head and lock in your portafilter with fresh grounds.",
-      "Start extraction and aim for a 25–30 second shot.",
-      "If making a latte or cappuccino, steam milk until velvety.",
-      "Pour milk over the espresso and serve immediately.",
-    ],
-    comments: [
-      {
-        id: 1,
-        user: "CoffeeFan23",
-        text: "This came out so smooth — perfect shot timing!",
-        time: "2 hours ago",
-      },
-      {
-        id: 2,
-        user: "BaristaGirl",
-        text: "Great base recipe. I added caramel syrup and it was amazing.",
-        time: "Yesterday",
-      },
-    ],
-  };
 
   return (
     <main className="p-6 max-w-3xl mx-auto font-sans">
