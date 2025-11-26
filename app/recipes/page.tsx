@@ -53,7 +53,7 @@ export default function RecipesPage() {
         transition={{ duration: 1 }}
       >
         <h1 className="text-4xl sm:text-5xl font-bold text-[#3F3E3E] mb-4">
-          Coffee Recipes ☕
+          Coffee Recipes
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
           From cozy classics to creative brews — explore recipes crafted to
