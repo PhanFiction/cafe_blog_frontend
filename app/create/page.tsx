@@ -2,6 +2,8 @@
 import React, { useState, FormEvent, ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { Coffee, PenLine, Image as ImageIcon } from "lucide-react";
+import Image from "next/image";
+import DragAndDropImage from "@/components/ImageUploader/ImageUploader";
 
 export default function CreateRecipeBlog() {
   const [type, setType] = useState("recipe");
@@ -15,6 +17,12 @@ export default function CreateRecipeBlog() {
     reader.onload = () => setUploadedImage(reader.result as string);
     reader.readAsDataURL(file);
   };
+
+  const removeImage = () => {
+    setUploadedImage(null);
+  };
+
+  const [fileSizeOverLimit, setFileSizeOverLimit] = useState(false);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-stone-200 to-stone-100 p-4 sm:p-6 flex justify-center items-start">
@@ -93,22 +101,16 @@ export default function CreateRecipeBlog() {
             />
           </div>
 
-          {/* Image Upload */}
-          <div className="flex flex-col gap-3">
-            <label className="text-stone-700 font-semibold mb-1 text-lg">Upload Image</label>
-
-            <label className="w-full border border-dashed border-stone-400 rounded-xl py-6 px-4 flex flex-col items-center justify-center text-center text-stone-600 hover:bg-stone-100 cursor-pointer transition">
-              <ImageIcon size={28} className="mb-2" />
-              <span className="font-medium">Click to upload an image</span>
-              <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
-            </label>
-
-            {uploadedImage && (
-              <div className="rounded-xl overflow-hidden shadow-md w-full">
-                <img src={uploadedImage} alt="Preview" className="w-full object-cover" />
-              </div>
-            )}
-          </div>
+          {/* Image Upload with Drag and Drop */}
+          <DragAndDropImage
+            image={uploadedImage}
+            setImage={setUploadedImage}
+            removeImage={removeImage}
+            setFileSizeOverLimit={setFileSizeOverLimit}
+          >
+            {/* You can pass any children here, like an icon or text */}
+            <div className="text-stone-600">Drag and drop an image here, or click to select one</div>
+          </DragAndDropImage>
 
           {/* Submit */}
           <motion.button
