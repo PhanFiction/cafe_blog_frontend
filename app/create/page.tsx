@@ -1,13 +1,16 @@
 "use client";
 import React, { useState, FormEvent, ChangeEvent } from "react";
 import { motion } from "framer-motion";
-import { Coffee, PenLine, Image as ImageIcon } from "lucide-react";
-import Image from "next/image";
+import { Coffee, PenLine } from "lucide-react";
 import DragAndDropImage from "@/components/ImageUploader/ImageUploader";
 
 export default function CreateRecipeBlog() {
   const [type, setType] = useState("recipe");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [fileSizeOverLimit, setFileSizeOverLimit] = useState(false);
+  const [title, setTitle] = useState<string>("");
+  const [ingredients, setIngredients] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -16,13 +19,17 @@ export default function CreateRecipeBlog() {
     const reader = new FileReader();
     reader.onload = () => setUploadedImage(reader.result as string);
     reader.readAsDataURL(file);
-  };
+  }
 
-  const removeImage = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    // Handle form submission logic here
     setUploadedImage(null);
-  };
+    setFileSizeOverLimit(false);
+    console.log();
+  }
 
-  const [fileSizeOverLimit, setFileSizeOverLimit] = useState(false);
+  const removeImage = () => setUploadedImage(null);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-stone-200 to-stone-100 p-4 sm:p-6 flex justify-center items-start">
@@ -68,7 +75,7 @@ export default function CreateRecipeBlog() {
         </div>
 
         {/* Form */}
-        <form className="space-y-6" onSubmit={(e: FormEvent) => e.preventDefault()}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Title */}
           <div className="flex flex-col">
             <label className="text-stone-700 font-semibold mb-1 text-lg">Title</label>
@@ -76,6 +83,8 @@ export default function CreateRecipeBlog() {
               type="text"
               className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-600"
               placeholder="Enter title..."
+              value={title}
+              onChange={(e) => {setTitle(e.target.value)}}
             />
           </div>
 
@@ -87,6 +96,8 @@ export default function CreateRecipeBlog() {
                 rows={4}
                 className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-600"
                 placeholder="List ingredients here..."
+                value={ingredients}
+                onChange={(e) => {setIngredients(e.target.value)}}
               />
             </div>
           )}
@@ -98,6 +109,8 @@ export default function CreateRecipeBlog() {
               rows={6}
               className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-600"
               placeholder="Describe your recipe or write your blog..."
+              value={description}
+              onChange={(e) => {setDescription(e.target.value)}}
             />
           </div>
 
