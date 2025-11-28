@@ -2,8 +2,8 @@ import { useState, useRef } from "react";
 import { UploadCloud, X } from "lucide-react";
 
 interface DragAndDropImageProps {
-  image?: string;
-  setImage: (image: string | ArrayBuffer | null) => void;
+  image?: string | null;
+  setImage: (image: string | null) => void;
   removeImage: () => void;
   setFileSizeOverLimit: (overLimit: boolean) => void;
   children?: React.ReactNode;
