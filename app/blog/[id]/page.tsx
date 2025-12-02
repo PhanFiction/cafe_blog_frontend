@@ -2,8 +2,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
-// Fake blog data — you can replace this with real data or fetch from API
 const blogs = [
   {
     id: 1,
@@ -51,51 +51,74 @@ export default function BlogPostPage({ params }: { params: { id: number } }) {
 
   return (
     <motion.div
-      className="min-h-screen bg-[#f7f5f2] text-[#3e3d3d]"
+      className="min-h-screen bg-[#f6f3ee] text-[#3e3d3d]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
     >
-      {/* Hero Section */}
-      <div className="relative h-[60vh] w-full overflow-hidden">
-        <Image
-          src={post.image}
-          alt={post.title}
-          fill
-          className="object-cover brightness-75"
-          priority
-        />
+      {/* --- HERO SECTION --- */}
+      <div className="relative h-[65vh] w-full overflow-hidden group">
+        {/* subtle parallax */}
+        <motion.div
+          initial={{ scale: 1 }}
+          animate={{ scale: 1.12 }}
+          transition={{ duration: 8, ease: "easeOut" }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover brightness-[0.55]"
+            priority
+          />
+        </motion.div>
+
+        {/* title + meta */}
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg mb-4"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-xl mb-3"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
             {post.title}
           </motion.h1>
-          <p className="text-white/90 text-sm md:text-base italic">
+
+          <motion.p
+            className="text-white/90 text-sm md:text-base italic tracking-wide"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             {post.date} • By {post.author}
-          </p>
+          </motion.p>
         </div>
       </div>
 
-      {/* Content Section */}
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-line">
-          {post.content}
-        </p>
-      </div>
+      {/* --- CONTENT --- */}
+      <motion.div
+        className="max-w-4xl mx-auto p-6 md:p-12 -mt-20"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="backdrop-blur-lg bg-white/50 p-8 md:p-10 rounded-2xl shadow-xl border border-white/40">
+          <p className="text-lg leading-relaxed whitespace-pre-line text-[#4a4747]">
+            {post.content}
+          </p>
+        </div>
+      </motion.div>
 
-      {/* Back Button */}
-      <div className="text-center pb-12">
+      {/* --- BACK BUTTON --- */}
+      <div className="text-center pb-16">
         <Link href="/blog">
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-[#3e3d3d] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#5c5959] transition-colors"
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.96 }}
+            className="flex items-center gap-2 mx-auto bg-[#3e3d3d] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#514f4f] transition-colors hover:cursor-pointer"
           >
-            ← Back to Blog
+            <ArrowLeft size={18} />
+            Back to Blog
           </motion.button>
         </Link>
       </div>
