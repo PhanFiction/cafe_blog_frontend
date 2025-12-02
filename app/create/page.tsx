@@ -1,35 +1,68 @@
 "use client";
 import React, { useState, FormEvent, ChangeEvent } from "react";
 import { motion } from "framer-motion";
-import { Coffee, PenLine } from "lucide-react";
+import { Coffee, PenLine, Plus, Trash } from "lucide-react";
 import DragAndDropImage from "@/components/ImageUploader/ImageUploader";
 
 export default function CreateRecipeBlog() {
   const [type, setType] = useState("recipe");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [fileSizeOverLimit, setFileSizeOverLimit] = useState(false);
+
   const [title, setTitle] = useState<string>("");
-  const [ingredients, setIngredients] = useState<string>("");
+
+  // Ingredients + steps as arrays
+  const [ingredients, setIngredients] = useState<string[]>([""]);
+  const [steps, setSteps] = useState<string[]>([""]);
+
   const [description, setDescription] = useState<string>("");
-
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => setUploadedImage(reader.result as string);
-    reader.readAsDataURL(file);
-  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
+
+    console.log({
+      uploadedImage,
+      title,
+      ingredients,
+      steps,
+      description,
+    });
+
     setUploadedImage(null);
     setFileSizeOverLimit(false);
-    console.log();
-  }
+  };
 
   const removeImage = () => setUploadedImage(null);
+
+  // Ingredient handlers
+  const updateIngredient = (index: number, value: string) => {
+    const updated = [...ingredients];
+    updated[index] = value;
+    setIngredients(updated);
+  };
+
+  const addIngredient = () => {
+    setIngredients([...ingredients, ""]);
+  };
+
+  const removeIngredient = (index: number) => {
+    setIngredients(ingredients.filter((_, i) => i !== index));
+  };
+
+  // Step handlers
+  const updateStep = (index: number, value: string) => {
+    const updated = [...steps];
+    updated[index] = value;
+    setSteps(updated);
+  };
+
+  const addStep = () => {
+    setSteps([...steps, ""]);
+  };
+
+  const removeStep = (index: number) => {
+    setSteps(steps.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-stone-200 to-stone-100 p-4 sm:p-6 flex justify-center items-start">
@@ -53,9 +86,9 @@ export default function CreateRecipeBlog() {
         <div className="flex justify-center gap-3 sm:gap-4 py-2 flex-wrap">
           <button
             onClick={() => setType("recipe")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold shadow-md transition-all hover:cursor-pointer text-sm sm:text-base ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold shadow-md transition-all text-sm sm:text-base hover:cursor-pointer ${
               type === "recipe"
-                ? "bg-stone-900 text-white border-stone-900"
+                ? "bg-stone-900 text-white"
                 : "bg-white text-stone-700 border border-stone-300 hover:bg-stone-200"
             }`}
           >
@@ -64,9 +97,9 @@ export default function CreateRecipeBlog() {
 
           <button
             onClick={() => setType("blog")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold shadow-md transition-all hover:cursor-pointer text-sm sm:text-base border ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold shadow-md transition-all text-sm sm:text-base border hover:cursor-pointer ${
               type === "blog"
-                ? "bg-stone-900 text-white border-stone-900"
+                ? "bg-stone-900 text-white"
                 : "bg-white text-stone-700 border-stone-300 hover:bg-stone-200"
             }`}
           >
@@ -81,48 +114,111 @@ export default function CreateRecipeBlog() {
             <label className="text-stone-700 font-semibold mb-1 text-lg">Title</label>
             <input
               type="text"
-              className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-600"
+              className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:ring-2 focus:ring-stone-600"
               placeholder="Enter title..."
               value={title}
-              onChange={(e) => {setTitle(e.target.value)}}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
-          {/* Ingredients - only for recipe */}
+          {/* Ingredients */}
           {type === "recipe" && (
-            <div className="flex flex-col">
-              <label className="text-stone-700 font-semibold mb-1 text-lg">Ingredients</label>
-              <textarea
-                rows={4}
-                className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-600"
-                placeholder="List ingredients here..."
-                value={ingredients}
-                onChange={(e) => {setIngredients(e.target.value)}}
-              />
+            <div className="space-y-3">
+              <label className="text-stone-700 font-semibold text-lg">
+                Ingredients
+              </label>
+
+              {ingredients.map((ingredient, index) => (
+                <div key={index} className="flex gap-3 items-start">
+                  <input
+                    type="text"
+                    value={ingredient}
+                    placeholder={`Ingredient ${index + 1}`}
+                    onChange={(e) => updateIngredient(index, e.target.value)}
+                    className="flex-1 border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:ring-2 focus:ring-stone-600"
+                  />
+
+                  {ingredients.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeIngredient(index)}
+                      className="p-2 bg-red-100 hover:bg-red-200 rounded-lg text-red-700"
+                    >
+                      <Trash size={18} />
+                    </button>
+                  )}
+                </div>
+              ))}
+
+              <button
+                type="button"
+                onClick={addIngredient}
+                className="flex items-center gap-2 text-stone-700 font-semibold hover:text-stone-900"
+              >
+                <Plus size={18} /> Add Ingredient
+              </button>
+            </div>
+          )}
+
+          {/* Steps */}
+          {type === "recipe" && (
+            <div className="space-y-3">
+              <label className="text-stone-700 font-semibold text-lg">Steps</label>
+
+              {steps.map((step, index) => (
+                <div key={index} className="flex gap-3 items-start">
+                  <textarea
+                    rows={2}
+                    value={step}
+                    placeholder={`Step ${index + 1}`}
+                    onChange={(e) => updateStep(index, e.target.value)}
+                    className="flex-1 border border-stone-300 rounded-xl px-4 py-2 text-stone-800 shadow-sm focus:ring-2 focus:ring-stone-600"
+                  />
+
+                  {steps.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeStep(index)}
+                      className="p-2 bg-red-100 hover:bg-red-200 rounded-lg text-red-700"
+                    >
+                      <Trash size={18} />
+                    </button>
+                  )}
+                </div>
+              ))}
+
+              <button
+                type="button"
+                onClick={addStep}
+                className="flex items-center gap-2 text-stone-700 font-semibold hover:text-stone-900"
+              >
+                <Plus size={18} /> Add Step
+              </button>
             </div>
           )}
 
           {/* Description */}
           <div className="flex flex-col">
-            <label className="text-stone-700 font-semibold mb-1 text-lg">Description</label>
+            <label className="text-stone-700 font-semibold mb-1 text-lg">
+              Description
+            </label>
             <textarea
-              rows={6}
-              className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-600"
+              rows={5}
+              className="border border-stone-300 rounded-xl px-4 py-3 text-stone-800 shadow-sm focus:ring-2 focus:ring-stone-600"
               placeholder="Describe your recipe or write your blog..."
               value={description}
-              onChange={(e) => {setDescription(e.target.value)}}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
 
-          {/* Image Upload with Drag and Drop */}
+          {/* Image Upload */}
           <DragAndDropImage
             image={uploadedImage}
             setImage={setUploadedImage}
             removeImage={removeImage}
             setFileSizeOverLimit={setFileSizeOverLimit}
           >
-            {/* You can pass any children here, like an icon or text */}
-            <div className="text-stone-600">Drag and drop an image here, or click to select one</div>
+            <div className="text-stone-600">Drag & drop an image, or click to upload</div>
           </DragAndDropImage>
 
           {/* Submit */}
@@ -130,7 +226,7 @@ export default function CreateRecipeBlog() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             type="submit"
-            className="w-full bg-stone-900 text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:bg-stone-800 transition-all"
+            className="w-full bg-stone-900 text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:bg-stone-800 transition-all hover:cursor-pointer"
           >
             Publish {type === "recipe" ? "Recipe" : "Blog"}
           </motion.button>
