@@ -8,13 +8,10 @@ export default function CreateRecipeBlog() {
   const [type, setType] = useState("recipe");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [fileSizeOverLimit, setFileSizeOverLimit] = useState(false);
-
   const [title, setTitle] = useState<string>("");
-
   // Ingredients + steps as arrays
   const [ingredients, setIngredients] = useState<string[]>([""]);
   const [steps, setSteps] = useState<string[]>([""]);
-
   const [description, setDescription] = useState<string>("");
 
   const handleSubmit = (e: FormEvent) => {
