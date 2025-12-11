@@ -21,12 +21,12 @@ const posts = [
 
 export default function Home() {
   return (
-    <main className="font-sans">
+    <main className="">
       {/* ===== Hero Section ===== */}
       <section className="flex flex-col md:flex-row items-center justify-between min-h-screen bg-[#f8f6f3] px-6 md:px-16 lg:px-24 py-16 md:py-0">
         {/* Left side — text content */}
         <div className="flex-1 text-center md:text-left space-y-6">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 mt-24 md:mt-0">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-poppins leading-tight text-gray-900 mt-24 md:mt-0">
             Welcome to My Cafe Blog
           </h1>
           <p className="text-lg text-gray-700 max-w-md mx-auto md:mx-0">
