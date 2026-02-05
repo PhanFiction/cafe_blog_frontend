@@ -3,6 +3,7 @@ import React, { useState, FormEvent, ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { Coffee, PenLine, Plus, Trash } from "lucide-react";
 import DragAndDropImage from "@/components/ImageUploader/ImageUploader";
+import * as services from "../../services";
 
 export default function CreateRecipeBlog() {
   const [type, setType] = useState("recipe");
@@ -17,13 +18,26 @@ export default function CreateRecipeBlog() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      uploadedImage,
-      title,
-      ingredients,
-      steps,
-      description,
-    });
+    if (fileSizeOverLimit) {
+      alert("Please upload an image smaller than 5MB.");
+      return;
+    }
+
+    if (type === "recipe") {
+      services.createRecipe({
+        title,
+        ingredients,
+        steps,
+        description,
+        image: uploadedImage,
+      });
+    } else {
+      services.createBlog({
+        title,
+        description,
+        image: uploadedImage,
+      });
+    }
 
     setUploadedImage(null);
     setFileSizeOverLimit(false);
