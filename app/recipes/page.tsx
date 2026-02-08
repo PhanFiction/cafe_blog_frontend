@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ShowCaseCard from "@/components/Card";
+import { fetchAllRecipes } from "../../services/index";
 
 const recipes = [
   {
@@ -43,6 +44,21 @@ const recipes = [
 ];
 
 export default function RecipesPage() {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    const loadRecipes = async () => {
+      try {
+        const data = await fetchAllRecipes();
+        setRecipes(data);
+        console.log("Fetched recipes:", data);
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    }
+    loadRecipes();
+  }, []);
+
   return (
     <section className="min-h-screen bg-[#f8f6f3] p-4">
       {/* Hero Section */}
