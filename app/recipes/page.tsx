@@ -4,45 +4,6 @@ import { motion } from "framer-motion";
 import ShowCaseCard from "@/components/Card";
 import { fetchAllRecipes } from "../../services/index";
 
-const recipes = [
-  {
-    id: 1,
-    title: "Classic Latte",
-    description: "Smooth espresso balanced with velvety steamed milk.",
-    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 2,
-    title: "Iced Mocha",
-    description: "Chocolate and espresso come together over refreshing ice.",
-    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 3,
-    title: "Espresso Tonic",
-    description: "Bright, citrusy tonic water paired with bold espresso.",
-    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 4,
-    title: "Caramel Macchiato",
-    description: "Layered espresso with milk and a drizzle of golden caramel.",
-    img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 5,
-    title: "Cold Brew",
-    description: "Slow-steeped overnight for a smooth, low-acid cup.",
-    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 6,
-    title: "Cappuccino",
-    description: "Rich espresso topped with steamed milk and airy foam.",
-    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-  },
-];
-
 export default function RecipesPage() {
   const [recipes, setRecipes] = useState([]);
 

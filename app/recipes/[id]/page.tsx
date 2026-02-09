@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Coffee, Droplets, CupSoda, MessageCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { fetchSingleRecipe } from "@/services/index";
+import { useParams } from "next/navigation";
 
 const recipe = {
   title: "Classic Espresso",
@@ -35,6 +38,23 @@ const recipe = {
 };
 
 export default function CoffeeRecipePage() {
+  const params = useParams();
+  const id = params.id;
+  const [recipeData, setRecipeData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchSingleRecipe(id);
+        setRecipeData(data);
+        console.log("Fetched recipe data:", data);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
+    }
+    fetchData();
+  }, []);
+  
   return (
     <main className="p-6 max-w-3xl mx-auto font-sans">
       <motion.div
