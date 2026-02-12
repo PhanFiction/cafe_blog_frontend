@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ShowCaseCard from "@/components/Card";
 import { motion } from "framer-motion";
+import { fetchBlogs } from "@/services/index";
 
 const blogs = [
   {
@@ -55,7 +56,22 @@ const blogs = [
 ];
 
 export default function BlogPage() {
+  const [blogPosts, setBlogPosts] = useState([]);
 
+  useEffect(() => {
+    // Simulate fetching blog posts from an API
+    const fetchData = async () => {
+      try {
+        const data = await fetchBlogs();
+        setBlogPosts(data);
+        console.log("Fetched blog posts:", data);
+        // You can set the fetched data to state here if needed
+      } catch (error) {
+        console.error("Error fetching blog posts:", error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="min-h-screen bg-[#f7f5f2] text-[#3e3d3d] p-4">
       <motion.div
