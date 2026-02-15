@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ShowCaseCard from "@/components/Card";
 import { motion } from "framer-motion";
-import { fetchBlogs } from "@/services/index";
+import { fetchAllBlogs } from "@/services/index";
 
 const blogs = [
   {
@@ -62,16 +62,18 @@ export default function BlogPage() {
     // Simulate fetching blog posts from an API
     const fetchData = async () => {
       try {
-        const data = await fetchBlogs();
+        const data = await fetchAllBlogs();
         setBlogPosts(data);
-        console.log("Fetched blog posts:", data);
+        //console.log("Fetched blog posts:", data[0].img);
+        console.log(JSON.stringify(data[0].img));
         // You can set the fetched data to state here if needed
       } catch (error) {
         console.error("Error fetching blog posts:", error);
       }
-    };
+    }
     fetchData();
   }, []);
+
   return (
     <div className="min-h-screen bg-[#f7f5f2] text-[#3e3d3d] p-4">
       <motion.div
