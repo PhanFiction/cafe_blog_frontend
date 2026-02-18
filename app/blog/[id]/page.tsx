@@ -1,8 +1,11 @@
 "use client";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { fetchSingleBlog } from "@/services/index";
 
 const blogs = [
   {
@@ -39,7 +42,23 @@ Perfect microfoam should look like wet paint and pour like cream.`,
 ];
 
 export default function BlogPostPage({ params }: { params: { id: number } }) {
+  const param = useParams();
   const post = blogs.find((b) => b.id === Number(params.id));
+  const [fetchedBlog, setBlog] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchSingleBlog(params.id);
+        setBlog(data);
+        console.log("Fetched blog post:", data);
+        // You can set the fetched data to state here if needed
+      } catch (error) {
+        console.error("Error fetching blog post:", error);
+      }
+    }
+    fetchData();
+  },[params.id]);
 
   if (!post) {
     return (
